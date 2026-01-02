@@ -4,7 +4,7 @@ import { Pool } from "pg";
 import * as schema from "./schema";
 
 if (ENV.DB_URL) {
-  throw new Error("DB_URL url is not set in env variable");
+  throw new Error("DB_URL url is not set in environmental variable");
 }
 
 const pool = new Pool({ connectionString: ENV.DB_URL });
