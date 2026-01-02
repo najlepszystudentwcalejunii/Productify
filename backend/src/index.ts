@@ -2,6 +2,9 @@ import express from "express";
 import { ENV } from "./config/env";
 import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
+import userRoutes from "./routes/userRoutes";
+import commentRoutes from "./routes/commentRoutes";
+import productRoutes from "./routes/productRoutes";
 
 const app = express();
 
@@ -13,6 +16,10 @@ app.use(
     origin: ENV.FRONTEND_URL,
   })
 );
+
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/comments", commentRoutes);
 
 app.get("/", (req, res) => {
   res.json({
