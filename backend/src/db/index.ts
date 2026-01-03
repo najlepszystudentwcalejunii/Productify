@@ -3,7 +3,7 @@ import { ENV } from "../config/env";
 import { Pool } from "pg";
 import * as schema from "./schema";
 
-if (ENV.DB_URL) {
+if (!ENV.DB_URL) {
   throw new Error("DB_URL url is not set in environmental variable");
 }
 
