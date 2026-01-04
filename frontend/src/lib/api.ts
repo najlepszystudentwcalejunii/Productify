@@ -1,4 +1,8 @@
-import { type NewUser, type Product } from "../../../backend/src/db/schema";
+import {
+  type NewProduct,
+  type NewUser,
+  type Product,
+} from "../../../backend/src/db/schema";
 import api from "./axios";
 
 export const syncUser = async (userData: Omit<NewUser, "id">) => {
@@ -6,8 +10,8 @@ export const syncUser = async (userData: Omit<NewUser, "id">) => {
   return data;
 };
 
-export const getAllProducts = async (id: string) => {
-  const { data } = await api.get(`/products/${id}`);
+export const getAllProducts = async () => {
+  const { data } = await api.get(`/products`);
   return data;
 };
 
@@ -16,7 +20,7 @@ export const getUserProducts = async () => {
   return data;
 };
 
-export const createProduct = async (productData: Product) => {
+export const createProduct = async (productData: NewProduct) => {
   const { data } = await api.post("/products", productData);
   return data;
 };
