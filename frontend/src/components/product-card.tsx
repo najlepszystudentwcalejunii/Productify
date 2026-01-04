@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import type { ProductWithUser } from "../hooks/useProducts";
+import type { ProductWithUser } from "../types/api";
 
 const oneWeekAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7);
 
@@ -13,8 +13,9 @@ const ProductCard = ({ product }: { product: ProductWithUser }) => {
       <div className="card-body flex flex-col space-y-2">
         <img
           src={product.imageUrl}
-          alt="Product image"
+          alt={product.title}
           className="mx-4 rounded-lg object-cover h-60"
+          onError={(e) => (e.currentTarget.style.display = "none")}
         />
 
         <h1 className="card-title text-base">
@@ -29,7 +30,7 @@ const ProductCard = ({ product }: { product: ProductWithUser }) => {
           {product.users.imageUrl && (
             <img
               src={product.users.imageUrl}
-              alt="User Profile Image"
+              alt={`${product.users.name}'s profile`}
               className="size-9 rounded-full"
             />
           )}

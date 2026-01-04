@@ -1,10 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createProduct, getAllProducts } from "../lib/api";
-import type { Product, User } from "../../../backend/src/db/schema";
+import type { ProductWithUser } from "../types/api";
 
-export interface ProductWithUser extends Product {
-  users: User;
-}
+export type { ProductWithUser };
 
 export const useProducts = () => {
   const results = useQuery<ProductWithUser[]>({

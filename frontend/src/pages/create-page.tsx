@@ -7,19 +7,19 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { type NewProduct } from "../../../backend/src/db/schema";
+import { type NewProduct } from "../types/api";
 import { useCreateProduct } from "../hooks/useProducts";
 import { useAuth } from "@clerk/clerk-react";
 
 const CreatePage = () => {
-  const { userId, isSignedIn } = useAuth();
+  const { userId } = useAuth();
   const navigate = useNavigate();
   const createProduct = useCreateProduct();
   const [formData, setFormData] = useState<NewProduct>({
     description: "",
     imageUrl: "",
     title: "",
-    userId: isSignedIn ? userId : "",
+    userId: userId!,
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

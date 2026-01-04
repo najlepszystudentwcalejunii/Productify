@@ -1,8 +1,4 @@
-import {
-  type NewProduct,
-  type NewUser,
-  type Product,
-} from "../../../backend/src/db/schema";
+import { type NewProduct, type NewUser, type Product } from "../types/api";
 import api from "./axios";
 
 export const syncUser = async (userData: Omit<NewUser, "id">) => {

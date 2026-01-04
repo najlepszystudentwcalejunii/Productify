@@ -23,15 +23,29 @@ function App() {
           <Route path="/product/:id" element={<ProductPage />}></Route>
           <Route
             path="/profile"
-            element={isSignedIn ? <ProfilePage /> : <Navigate to={"/"} />}
+            element={
+              isSignedIn ? (
+                <ProfilePage />
+              ) : (
+                <Navigate to={"/"} replace={true} />
+              )
+            }
           ></Route>
           <Route
             path="/create"
-            element={isSignedIn ? <CreatePage /> : <Navigate to={"/"} />}
+            element={
+              isSignedIn ? <CreatePage /> : <Navigate to={"/"} replace={true} />
+            }
           ></Route>
           <Route
             path="/edit"
-            element={isSignedIn ? <EditProductPage /> : <Navigate to={"/"} />}
+            element={
+              isSignedIn ? (
+                <EditProductPage />
+              ) : (
+                <Navigate to={"/"} replace={true} />
+              )
+            }
           ></Route>
         </Routes>
       </main>
