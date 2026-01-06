@@ -10,4 +10,8 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
+  <script>
+    const theme = localStorage.getItem("theme") || "forest";
+    document.documentElement.setAttribute("data-theme", theme);
+  </script>
 </html>

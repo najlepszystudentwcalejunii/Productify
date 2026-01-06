@@ -5,6 +5,7 @@ import {
   getAllProducts,
   getProductById,
   getUserProducts,
+  updateProduct,
 } from "../lib/api";
 import type {
   Product,
@@ -24,6 +25,11 @@ export const useProducts = () => {
 export const useCreateProduct = () => {
   return useMutation({
     mutationFn: createProduct,
+  });
+};
+export const useUpdateProduct = () => {
+  return useMutation({
+    mutationFn: updateProduct,
   });
 };
 
