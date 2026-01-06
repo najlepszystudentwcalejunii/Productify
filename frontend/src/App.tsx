@@ -19,8 +19,8 @@ function App() {
       <NavBar />
       <main className="max-w-5xl mx-auto px-4 py-8">
         <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/product/:id" element={<ProductPage />}></Route>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
           <Route
             path="/profile"
             element={
@@ -30,15 +30,15 @@ function App() {
                 <Navigate to={"/"} replace={true} />
               )
             }
-          ></Route>
+          />
           <Route
             path="/create"
             element={
               isSignedIn ? <CreatePage /> : <Navigate to={"/"} replace={true} />
             }
-          ></Route>
+          />
           <Route
-            path="/edit"
+            path="/edit/:id"
             element={
               isSignedIn ? (
                 <EditProductPage />
@@ -46,7 +46,8 @@ function App() {
                 <Navigate to={"/"} replace={true} />
               )
             }
-          ></Route>
+          />
+          <Route path="*" element={<Navigate to={"/"} />} />
         </Routes>
       </main>
     </div>
