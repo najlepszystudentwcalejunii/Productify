@@ -39,6 +39,10 @@ export interface ProductWithUser extends Product {
   users: User;
 }
 
+export interface ProductWithUserAndComments extends ProductWithUser {
+  comments: CommentWithUser[];
+}
+
 export interface Comment {
   id: string;
   createdAt: Date;
@@ -53,4 +57,8 @@ export interface NewComment {
   productId: string;
   id?: string | undefined;
   createdAt?: Date | undefined;
+}
+
+export interface CommentWithUser extends Comment {
+  users: User;
 }

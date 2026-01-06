@@ -16,6 +16,11 @@ export const getUserProducts = async () => {
   return data;
 };
 
+export const getProductById = async (id: string) => {
+  const { data } = await api.get(`/products/${id}`);
+  return data;
+};
+
 export const createProduct = async (productData: NewProduct) => {
   const { data } = await api.post("/products", productData);
   return data;
@@ -31,8 +36,14 @@ export const deleteProduct = async (id: string) => {
   return data;
 };
 
-export const createComment = async (commentData: Comment) => {
-  const { data } = await api.post("/comments", commentData);
+export const createComment = async ({
+  productId,
+  content,
+}: {
+  productId: string;
+  content: string;
+}) => {
+  const { data } = await api.post(`/comments/${productId}`, { content });
   return data;
 };
 

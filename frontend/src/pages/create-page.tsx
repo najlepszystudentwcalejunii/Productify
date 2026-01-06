@@ -80,6 +80,9 @@ const CreatePage = () => {
                   src={formData.imageUrl}
                   alt="Preview"
                   className="w-full h-40 object-cover"
+                  onError={(e) =>
+                    (e.currentTarget.style.visibility = "collapse")
+                  }
                 />
               </div>
             )}

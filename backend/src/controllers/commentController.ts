@@ -33,8 +33,9 @@ export async function deleteComment(req: Request, res: Response) {
     const { userId } = getAuth(req);
     if (!userId) return res.status(403).json({ error: "Unauthenticated" });
 
-    const { id } = req.params;
-    const comment = await queries.getCommentById(id);
+    const { commentId } = req.params;
+
+    const comment = await queries.getCommentById(commentId);
     if (!comment) return res.status(404).json({ error: "Product not found" });
 
     if (comment.userId !== userId)
@@ -42,7 +43,7 @@ export async function deleteComment(req: Request, res: Response) {
         .status(403)
         .json({ error: "You can only delete your own comments" });
 
-    await queries.deleteComment(id);
+    await queries.deleteComment(commentId);
     return res.status(200).json(comment);
   } catch (err) {
     console.error("Error when deleting a comment", err);
