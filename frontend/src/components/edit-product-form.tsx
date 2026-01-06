@@ -1,45 +1,48 @@
-import { useAuth } from "@clerk/clerk-react";
+import { useState } from "react";
+import type { NewProduct, Product } from "../types/api";
+import { Link } from "react-router";
 import {
   ArrowLeftIcon,
   FileTextIcon,
   ImageIcon,
-  SparklesIcon,
+  SaveIcon,
   TypeIcon,
 } from "lucide-react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router";
-import { useCreateProduct } from "../hooks/useProducts";
-import { type NewProduct } from "../types/api";
 
-const CreatePage = () => {
-  const { userId } = useAuth();
-  const navigate = useNavigate();
-  const createProduct = useCreateProduct();
+interface Props {
+  product: Product;
+  isPending: boolean;
+  isError: boolean;
+  onSubmit: (formData: NewProduct) => void;
+}
+
+const EditProductForm = ({ isError, isPending, onSubmit, product }: Props) => {
   const [formData, setFormData] = useState<NewProduct>({
-    description: "",
-    imageUrl: "",
-    title: "",
-    userId: userId!,
+    title: product.title,
+    description: product.description,
+    imageUrl: product.imageUrl,
+    userId: product.userId,
   });
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    createProduct.mutate(formData, {
-      onSuccess: () => navigate("/"),
-    });
-  };
   return (
     <div className="max-w-lg mx-auto">
-      <Link to={"/"} className="btn btn-ghost btn-sm gap-1 mb-4">
-        <ArrowLeftIcon className="size-4" /> Back
+      <Link to={"/profile"} className="btn btn-ghost btn-sm gap-1 mb-4">
+        <ArrowLeftIcon className="size-4" />
+        Back
       </Link>
+
       <div className="card bg-base-300">
         <div className="card-body">
           <h1 className="card-title">
-            <SparklesIcon className="size-5 text-primary" />
-            New Product
+            <SaveIcon className="size-5 text-primary" />
+            Edit Product
           </h1>
-          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit(formData);
+            }}
+            className="space-y-4 mt-4"
+          >
             <label className="input input-bordered flex items-center gap-2 bg-base-200">
               <TypeIcon className="size-4 text-base-content/50" />
               <input
@@ -48,15 +51,11 @@ const CreatePage = () => {
                 className="grow"
                 value={formData.title}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    title: e.target.value,
-                  })
+                  setFormData({ ...formData, title: e.target.value })
                 }
                 required
               />
             </label>
-
             <label className="input input-bordered flex items-center gap-2 bg-base-200">
               <ImageIcon className="size-4 text-base-content/50" />
               <input
@@ -65,10 +64,7 @@ const CreatePage = () => {
                 className="grow"
                 value={formData.imageUrl}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    imageUrl: e.target.value,
-                  })
+                  setFormData({ ...formData, imageUrl: e.target.value })
                 }
                 required
               />
@@ -90,8 +86,8 @@ const CreatePage = () => {
               <div className="flex items-start gap-2 p-3 rounded-box bg-base-200 border border-base-300">
                 <FileTextIcon className="size-4 text-base-content/50 mt-1" />
                 <textarea
-                  placeholder="Description"
-                  className="grow bg-transparent resize-none focus:outline-none min-h-24"
+                  placeholder="Product Description"
+                  className="grow resize-none bg-transparent focus:outline-none min-h-24"
                   value={formData.description}
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
@@ -100,22 +96,20 @@ const CreatePage = () => {
                 />
               </div>
             </div>
-
-            {createProduct.isError && (
-              <div role="alert" className="alert alert-error alert-sm">
-                <span>Failed to create. Try again.</span>
+            {isError && (
+              <div className="alert alert-error alert-sm" role="alert">
+                <span>Failed to update. Try again.</span>
               </div>
             )}
-
             <button
-              type="submit"
               className="btn btn-primary w-full"
-              disabled={createProduct.isPending}
+              type="submit"
+              disabled={isPending}
             >
-              {createProduct.isPending ? (
+              {isPending ? (
                 <span className="loading loading-spinner" />
               ) : (
-                "Create Product"
+                "Save Changes"
               )}
             </button>
           </form>
@@ -124,5 +118,4 @@ const CreatePage = () => {
     </div>
   );
 };
-
-export default CreatePage;
+export default EditProductForm;

@@ -1,4 +1,4 @@
-import { type NewProduct, type NewUser, type Product } from "../types/api";
+import { type NewProduct, type NewUser } from "../types/api";
 import api from "./axios";
 
 export const syncUser = async (userData: Omit<NewUser, "id">) => {
@@ -26,7 +26,7 @@ export const createProduct = async (productData: NewProduct) => {
   return data;
 };
 
-export const updateProduct = async ({ id, ...productData }: Product) => {
+export const updateProduct = async ({ id, ...productData }: NewProduct) => {
   const { data } = await api.put(`/products/${id}`, productData);
   return data;
 };
